@@ -1,0 +1,8 @@
+export const FETCH_POSTS = "FETCH_POSTS";
+export const FETCH_POSTS_REQ = "FETCH_POSTS_REQ";
+export const FETCH_POSTS_SUC = "FETCH_POSTS_SUC";
+export const FETCH_POSTS_FAIL = "FETCH_POSTS_FAIL";
+
+export const FIND_ONE_POST_REQ = "FIND_ONE_POST_REQ";
+export const FIND_ONE_POST_SUC = "FIND_ONE_POST_SUC";
+export const FIND_ONE_POST_FAIL = "FIND_ONE_POST_FAIL";
