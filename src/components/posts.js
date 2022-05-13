@@ -10,9 +10,11 @@ const PostsPage = ({ loading, posts, navigate }) => {
       <br />
       <div>
         {posts.map((e) => (
-          <Link to={`/posts/${e.id}`} key={e.id}>
-            {e.title}
-          </Link>
+          <div key={e.id} style={{ display: "flex" }}>
+            <Link to={`/posts/${e.id}`} key={e.id}>
+              {e.title}
+            </Link>
+          </div>
         ))}
       </div>
       <Outlet />

@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { compose, lifecycle, withHandlers, withProps } from "recompose";
 import { fetchPosts, fetchPostsReq } from "../redux/actions";
-import { isLocalStorageInit } from "../utils/isLocalStorageInit";
 
 const postEnhancer = compose(
   connect(

@@ -1,8 +1,6 @@
+import { getPostsFromLocalStorage } from "./getPostsFromLocalStorge";
+
 export const findOnePostById = (id, posts) => {
-  console.log(
-    posts.find((e) => e.id === id),
-    id,
-    posts
-  );
-  return posts.find((e) => e.id === id);
+  // return getPostsFromLocalStorage().find((e) => e.id === Number(id));
+  return posts.find((e) => e.id === Number(id));
 };
