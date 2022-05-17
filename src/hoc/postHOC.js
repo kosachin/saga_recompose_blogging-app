@@ -1,30 +1,37 @@
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchPosts } from "../redux/actions";
 import {
-  compose,
-  lifecycle,
-  withHandlers,
-  withProps,
-  withState,
-} from "recompose";
-import { findOnePostById } from "../utils/findOnePostId";
+  fetchOnePost,
+  fetchOnePostReq,
+  removeOnePostSuc,
+} from "../redux/actions";
+import { compose, lifecycle, withHandlers, withProps } from "recompose";
 
 const PostEnhancer = compose(
-  withState("post", "setPost", {}),
   connect(
     (store) => ({
-      posts: store.posts,
+      post: store.currPost,
+      loading: store.loading,
     }),
     (dispatch) => ({
-      fetchAllPostsSuc: () => dispatch(fetchPosts()),
+      fetchOnePostReq: () => dispatch(fetchOnePostReq()),
+      fetchOnePostSuc: (id) => dispatch(fetchOnePost(id)),
+      removeOnePostSuc: () => dispatch(removeOnePostSuc()),
     })
   ),
   withHandlers({
-    handleFetchAllPostsSuc:
-      ({ fetchAllPostsSuc }) =>
+    handleFetchOnePostReq:
+      ({ fetchOnePostReq }) =>
       () =>
-        fetchAllPostsSuc(),
+        fetchOnePostReq(),
+    handleFetchOnePostSuc:
+      ({ fetchOnePostSuc }) =>
+      (id) =>
+        fetchOnePostSuc(id),
+    handleRemoveOnePostSuc:
+      ({ removeOnePostSuc }) =>
+      () =>
+        removeOnePostSuc(),
   }),
   withProps(() => {
     const { id } = useParams();
@@ -33,9 +40,9 @@ const PostEnhancer = compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { id, setPost, handleFetchAllPostsSuc, posts } = this.props;
-      handleFetchAllPostsSuc();
-      setPost(() => findOnePostById(id, posts));
+      const { id, handleFetchOnePostSuc, handleFetchOnePostReq } = this.props;
+      handleFetchOnePostReq();
+      handleFetchOnePostSuc(id);
     },
   })
 );

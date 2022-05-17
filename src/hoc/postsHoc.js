@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { compose, lifecycle, withHandlers, withProps } from "recompose";
-import { fetchPosts, fetchPostsReq } from "../redux/actions";
+import { deleteOnePostReq, fetchPosts, fetchPostsReq } from "../redux/actions";
 
 const postEnhancer = compose(
   connect(
@@ -12,6 +12,7 @@ const postEnhancer = compose(
     (dispatch) => ({
       fetchAllPostsReq: () => dispatch(fetchPostsReq()),
       fetchAllPostsSuc: () => dispatch(fetchPosts()),
+      deleteOnePost: (id) => dispatch(deleteOnePostReq(id)),
     })
   ),
   withHandlers({
@@ -23,6 +24,10 @@ const postEnhancer = compose(
       ({ fetchAllPostsSuc }) =>
       () =>
         fetchAllPostsSuc(),
+    handleDeleteOnePost:
+      ({ deleteOnePost }) =>
+      (id) =>
+        deleteOnePost(id),
   }),
   withProps(() => {
     const navigate = useNavigate();
@@ -34,6 +39,7 @@ const postEnhancer = compose(
       const {
         handleFetchAllPostsReq,
         handleFetchAllPostsSuc,
+        posts,
         searchParams,
         navigate,
       } = this.props;
