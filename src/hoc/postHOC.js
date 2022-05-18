@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  fetchOnePost,
-  fetchOnePostReq,
-  removeOnePostSuc,
-} from "../redux/actions";
+import { fetchOnePost, fetchOnePostReq } from "../redux/actions";
 import { compose, lifecycle, withHandlers, withProps } from "recompose";
 
 const PostEnhancer = compose(
@@ -16,7 +12,6 @@ const PostEnhancer = compose(
     (dispatch) => ({
       fetchOnePostReq: () => dispatch(fetchOnePostReq()),
       fetchOnePostSuc: (id) => dispatch(fetchOnePost(id)),
-      removeOnePostSuc: () => dispatch(removeOnePostSuc()),
     })
   ),
   withHandlers({
@@ -28,10 +23,6 @@ const PostEnhancer = compose(
       ({ fetchOnePostSuc }) =>
       (id) =>
         fetchOnePostSuc(id),
-    handleRemoveOnePostSuc:
-      ({ removeOnePostSuc }) =>
-      () =>
-        removeOnePostSuc(),
   }),
   withProps(() => {
     const { id } = useParams();

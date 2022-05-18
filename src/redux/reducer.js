@@ -1,4 +1,10 @@
 import {
+  ADD_ONE_POST,
+  ADD_ONE_POST_FAIL,
+  ADD_ONE_POST_REQ,
+  ADD_ONE_POST_SUC,
+  DELETE_ONE_POST_FAIL,
+  DELETE_ONE_POST_REQ,
   DELETE_ONE_POST_SUC,
   FETCH_ONE_POST_FAIL,
   FETCH_ONE_POST_REQ,
@@ -6,7 +12,6 @@ import {
   FETCH_POSTS_FAIL,
   FETCH_POSTS_REQ,
   FETCH_POSTS_SUC,
-  FIND_ONE_POST_SUC,
   REMOVE_ONE_POST_SUC,
 } from "./constants";
 
@@ -39,11 +44,26 @@ export const postsReducer = (store = init, { type, payload }) => {
       return { ...store, loading: false, currPost: payload };
     case FETCH_ONE_POST_FAIL:
       return { ...store, loading: false, error: payload.message };
-    case REMOVE_ONE_POST_SUC:
-      console.log("removed");
-      return { ...store, currPost: null };
+    case DELETE_ONE_POST_REQ:
+      return { ...store, loading: true };
     case DELETE_ONE_POST_SUC:
-      return { ...store, loading: false, posts: payload };
+      return {
+        ...store,
+        loading: false,
+        posts: payload,
+        meta: {
+          total: payload.length,
+        },
+      };
+    case DELETE_ONE_POST_FAIL:
+      return { ...store, loading: false, error: payload.message };
+
+    case ADD_ONE_POST_REQ:
+      return { ...store, loading: true };
+    case ADD_ONE_POST_SUC:
+      return { ...store, loading: false, posts: [...store.posts, payload] };
+    case ADD_ONE_POST_FAIL:
+      return { ...store, loading: false, error: payload.message };
     default:
       return store;
   }

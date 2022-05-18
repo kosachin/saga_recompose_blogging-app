@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import PostEnhancer from "../hoc/postHOC";
 
-const Post = ({ post, loading, navigate, handleRemoveOnePostSuc }) => {
+const Post = ({ post, loading, navigate }) => {
   const backBtn = () => {
-    handleRemoveOnePostSuc();
-    navigate(-1);
+    navigate("/posts");
   };
   return (
     <div>

@@ -1,7 +1,12 @@
 import { connect } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { compose, lifecycle, withHandlers, withProps } from "recompose";
-import { deleteOnePostReq, fetchPosts, fetchPostsReq } from "../redux/actions";
+import { compose, withHandlers, withProps } from "recompose";
+import {
+  deleteOnePost,
+  deleteOnePostReq,
+  fetchOnePost,
+  fetchOnePostReq,
+} from "../redux/actions";
 
 const postEnhancer = compose(
   connect(
@@ -10,44 +15,34 @@ const postEnhancer = compose(
       loading: store.loading,
     }),
     (dispatch) => ({
-      fetchAllPostsReq: () => dispatch(fetchPostsReq()),
-      fetchAllPostsSuc: () => dispatch(fetchPosts()),
-      deleteOnePost: (id) => dispatch(deleteOnePostReq(id)),
+      deleteOnePostLoading: (id) => dispatch(deleteOnePostReq(id)),
+      deleteOnePost: (id) => dispatch(deleteOnePost(id)),
+      fetchOnePostReq: () => dispatch(fetchOnePostReq()),
+      fetchOnePostSuc: (id) => dispatch(fetchOnePost(id)),
     })
   ),
   withHandlers({
-    handleFetchAllPostsReq:
-      ({ fetchAllPostsReq }) =>
-      () =>
-        fetchAllPostsReq(),
-    handleFetchAllPostsSuc:
-      ({ fetchAllPostsSuc }) =>
-      () =>
-        fetchAllPostsSuc(),
+    handleDeleteOneLoading:
+      ({ deleteOnePostLoading }) =>
+      (id) =>
+        deleteOnePostLoading(id),
     handleDeleteOnePost:
       ({ deleteOnePost }) =>
       (id) =>
         deleteOnePost(id),
+    handleFetchOnePostReq:
+      ({ fetchOnePostReq }) =>
+      () =>
+        fetchOnePostReq(),
+    handleFetchOnePostSuc:
+      ({ fetchOnePostSuc }) =>
+      (id) =>
+        fetchOnePostSuc(id),
   }),
   withProps(() => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     return { navigate, searchParams };
-  }),
-  lifecycle({
-    componentDidMount() {
-      const {
-        handleFetchAllPostsReq,
-        handleFetchAllPostsSuc,
-        posts,
-        searchParams,
-        navigate,
-      } = this.props;
-
-      // navigate("?pg=1");
-      handleFetchAllPostsReq();
-      handleFetchAllPostsSuc();
-    },
   })
 );
 export default postEnhancer;

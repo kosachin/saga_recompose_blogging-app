@@ -1,8 +1,19 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
-const link = {
-  textDecoration: "none",
-};
-const Home = () => {
+import { NavLink, Outlet } from "react-router-dom";
+
+import HomeEnhancer from "../hoc/homeHOC";
+const Home = ({
+  posts,
+  navigate,
+  handleFetchAllPostsLoading,
+  handleFetchAllPostsSuc,
+}) => {
+  const a = () => {
+    if (posts.length <= 0) {
+      handleFetchAllPostsLoading();
+      handleFetchAllPostsSuc();
+      navigate("/posts");
+    }
+  };
   return (
     <div>
       <NavLink
@@ -17,18 +28,14 @@ const Home = () => {
       >
         Home
       </NavLink>
-      <NavLink
-        style={({ isActive }) => {
-          return {
-            display: isActive ? "none" : "block",
-          };
-        }}
-        to="/posts"
+      <button
+        style={{ display: posts.length > 0 ? "none" : "block" }}
+        onClick={a}
       >
         Posts
-      </NavLink>
+      </button>
       <Outlet></Outlet>
     </div>
   );
 };
-export default Home;
+export default HomeEnhancer(Home);

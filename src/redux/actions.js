@@ -1,16 +1,20 @@
 import {
-  DELETE_ONE_POST_FAIL,
-  DELETE_ONE_POST_REQ,
-  DELETE_ONE_POST_SUC,
-  FETCH_ONE_POST,
-  FETCH_ONE_POST_FAIL,
-  FETCH_ONE_POST_REQ,
-  FETCH_ONE_POST_SUC,
   FETCH_POSTS,
-  FETCH_POSTS_FAIL,
   FETCH_POSTS_REQ,
   FETCH_POSTS_SUC,
-  REMOVE_ONE_POST_SUC,
+  FETCH_POSTS_FAIL,
+  FETCH_ONE_POST,
+  FETCH_ONE_POST_REQ,
+  FETCH_ONE_POST_SUC,
+  FETCH_ONE_POST_FAIL,
+  DELETE_ONE_POST,
+  DELETE_ONE_POST_REQ,
+  DELETE_ONE_POST_SUC,
+  DELETE_ONE_POST_FAIL,
+  ADD_ONE_POST,
+  ADD_ONE_POST_SUC,
+  ADD_ONE_POST_FAIL,
+  ADD_ONE_POST_REQ,
 } from "./constants";
 
 export const fetchPosts = () => ({
@@ -34,6 +38,7 @@ export const fetchOnePost = (payload) => ({
   type: FETCH_ONE_POST,
   payload,
 });
+
 export const fetchOnePostReq = () => ({
   type: FETCH_ONE_POST_REQ,
 });
@@ -48,8 +53,9 @@ export const fetchOnePostFail = (payload) => ({
   payload,
 });
 
-export const removeOnePostSuc = () => ({
-  type: REMOVE_ONE_POST_SUC,
+export const deleteOnePost = (payload) => ({
+  type: DELETE_ONE_POST,
+  payload,
 });
 
 export const deleteOnePostReq = (payload) => ({
@@ -64,5 +70,25 @@ export const deleteOnePostSuc = (payload) => ({
 
 export const deleteOnePostFail = (payload) => ({
   type: DELETE_ONE_POST_FAIL,
+  payload,
+});
+
+export const addOnePost = (payload) => ({
+  type: ADD_ONE_POST,
+  payload,
+});
+
+export const addOnePostReq = (payload) => ({
+  type: ADD_ONE_POST_REQ,
+  payload,
+});
+
+export const addOnePostSuc = (payload) => ({
+  type: ADD_ONE_POST_SUC,
+  payload,
+});
+
+export const addOnePostFail = (payload) => ({
+  type: ADD_ONE_POST_FAIL,
   payload,
 });
